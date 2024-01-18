@@ -10,7 +10,7 @@ main {
     background: url('./assets/background.png') no-repeat top center/cover;
     background-attachment: fixed;
 
-    @media screen and (max-width:768px) {
+    @media screen and (max-width:811px) {
         background: url('./assets/bg-mobile.png') no-repeat top center/cover;
     }
 }
