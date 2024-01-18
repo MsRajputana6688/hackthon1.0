@@ -59,7 +59,7 @@ const Home = () => {
     const handleGenrate = async () => {
         setIsLoad(true)
         try {
-            const res = await axios.post(`${process.env.AI_SERVER}/rec`, {
+            const res = await axios.post("https://bb22-103-17-110-13.ngrok-free.app/rec", {
                 image: imgFile.split(',')[1],
                 choice: select
             })
