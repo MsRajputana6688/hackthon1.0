@@ -3,16 +3,21 @@ import { v4 as uuid } from 'uuid';
 import Link from 'next/link'
 import QRCode from 'qrcode.react'
 import React, { useState } from 'react'
-import { Container, Row, Col, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Modal, Button } from 'react-bootstrap'
 import { useRouter } from 'next/navigation'
 import { FaHome } from 'react-icons/fa'
 import axios from 'axios';
-const Result = ({ result, setResult }) => {
+const Result = ({ result, setResult, url }) => {
     const unique_id = uuid();
     const small_id = unique_id.slice(0, 5)
+    const [email, setEmail] = useState('')
     const router = useRouter()
     const [showQr, setShowQr] = useState(false)
     const [qr, setQr] = useState('')
+    const [show, setShow] = useState(false)
+    const [resMSG, setresMSG] = useState('')
+    const [showMSG, setShowMsg] = useState(false)
+
     const handleRedirect = () => {
         setTimeout(() => {
             router.push(`result/${small_id}`);
@@ -31,47 +36,43 @@ const Result = ({ result, setResult }) => {
         }
     }
 
-    const handlePrint = () => {
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-            <html>
-                <head>
-                    <title>Print</title>
-                </head>
-            <body>
-                <div id="finalImag" class="d-flex justify-content-center"> 
-                    <img src=${result} style="width:95%; border-radius :10px; display:block; margin:auto"/> 
-                </div>
-            </body>
-            </html>    
-        `);
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
-    };
+    
 
+    const handalSendEmail = async () => {
+        try {
+            const res = await axios.post('https://adp24companyday.com/aiphotobooth/emailer/index.php', { 'email': email, 'url': url })
+            setresMSG(res.data.message)
+            setShowMsg(true)
+            setShow(false)
+            setEmail('')
+        } catch (error) {
+        }
+    }
     return (
-        <div className='center_main py-5 '>
-            <h1 className='text-center'>Here is Your Photograph</h1>
-            <Container className=''>
+        <div className='d-flex align-items-center center_main pt-5' style={{ minHeight: '100vh' }}>
+            <Container className='pt-5' style={{ paddingTop: '100px' }}>
+                <h1 className='text-center pt-t mt-5 text-dark fw-bold'>Here is Your Photograph</h1>
                 <Row className='justify-content-center align-items-center'>
-                    <Col lg={9} md={12} sm={12} xs={12}>
-                        <div className="finalImag">
-                            <img src={result} alt="" />
-                        </div>
-                        <div className="d-flex justify-content-between py-4">
-                            <div>
-                                <button className='btn btn-warning wt-border start-btn' onClick={() => setResult('')}>Re-generate</button>
+                    <Col lg={9} md={12} sm={12} xs={12} className='d'>
+                        <div style={{ width: '70%' }} className='m-auto'>
+                            <div className="finalImag">
+                                <img src={result} alt="" />
                             </div>
+                        </div>
+                        <div className="d-flex justify-content-between flex-wrap py-4 m-auto" style={{ width: '80%' }}>
+
                             <div>
                                 <a href={result} download={`${small_id}`} target="_blank" rel="noopener noreferrer" className='btn wt-border btn-warning start-btn'>Save</a>
                             </div>
                             <div>
-                                <button onClick={handleQrCode} className='btn wt-border btn-warning start-btn'>Generate QR</button>
+                                <button onClick={handleQrCode} className='btn wt-border btn-warning start-btn'>QR</button>
                             </div>
-                            <div className='my-2'>
-                                <button onClick={handlePrint} className='btn wt-border btn-warning start-btn' >Print</button>
+                            <div>
+                                <button onClick={() => setShow(true)} className='btn wt-border btn-warning start-btn'>Email</button>
                             </div>
+                        </div>
+                        <div className='d-flex justify-content-center'>
+                            <button className='btn btn-warning wt-border start-btn' onClick={() => setResult('')}>Re-generate</button>
                         </div>
                     </Col>
                     <Modal
@@ -98,7 +99,44 @@ const Result = ({ result, setResult }) => {
             <Link href='/' className="back-home">
                 <FaHome />
             </Link>
-        </div>
+
+
+            <Modal show={show} animation={true} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Please Enter Your Email</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input className='form-control' value={email} onChange={e => setEmail(e.target.value)} />
+                </Modal.Body>
+                <Modal.Footer>
+
+                    {
+                        email ? <Button variant="secondary" onClick={handalSendEmail}>
+                            Send
+                        </Button> : <Button variant="secondary" disabled>
+                            Send
+                        </Button>
+                    }
+
+
+                </Modal.Footer>
+            </Modal>
+            <Modal show={showMSG} animation={true} centered>
+                {/* <Modal.Header closeButton>
+                    <Modal.Title>Please Enter Your Email</Modal.Title>
+                </Modal.Header> */}
+                <Modal.Body>
+                    <h3 className='text-center py-3'>
+                        {resMSG}
+                    </h3>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowMsg(false)}>
+                        Ok
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div >
     )
 }
 
