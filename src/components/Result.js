@@ -48,6 +48,11 @@ const Result = ({ result, setResult, url }) => {
         } catch (error) {
         }
     }
+
+    const handleClose =()=>{
+                setShowMsg(false)
+            setShow(false)
+    }
     return (
         <div className='d-flex align-items-center center_main pt-5' style={{ minHeight: '100vh' }}>
             <Container className='pt-5' style={{ paddingTop: '100px' }}>
@@ -101,7 +106,7 @@ const Result = ({ result, setResult, url }) => {
             </Link>
 
 
-            <Modal show={show} animation={true} centered>
+            <Modal show={show} animation={true} centered onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Please Enter Your Email</Modal.Title>
                 </Modal.Header>
@@ -121,7 +126,7 @@ const Result = ({ result, setResult, url }) => {
 
                 </Modal.Footer>
             </Modal>
-            <Modal show={showMSG} animation={true} centered>
+            <Modal show={showMSG} onHide={handleClose} animation={true} centered>
                 {/* <Modal.Header closeButton>
                     <Modal.Title>Please Enter Your Email</Modal.Title>
                 </Modal.Header> */}
