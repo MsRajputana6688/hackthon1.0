@@ -54,7 +54,7 @@ const Page = () => {
   ]
 
   return (
-    <div className="main pt-5">
+    <div className="main" style={{paddingTop : "150px"}}>
 
       {
         isLoad ? <Loader /> : <Container className='mt-5 d-flex' style={{ minHeight: '100vh', alignItems: 'center' }}>
