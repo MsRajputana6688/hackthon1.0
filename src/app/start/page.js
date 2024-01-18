@@ -81,7 +81,7 @@ const Home = () => {
     }
 
     return (
-        !result ? <div className='pt-5 d-flex justify-content-center' style={{ minHeight: '100vh', alignItems: 'center' }}>
+        !result ? <div className='d-flex justify-content-center' style={{ minHeight: '100vh',paddingTop:'180px', alignItems: 'center' }}>
             {
                 isLoad && <div className="isLoad">
                     <div className="spinner-border text-light" role="status">
