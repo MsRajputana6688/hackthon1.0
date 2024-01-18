@@ -119,9 +119,9 @@ const Home = () => {
                 </div> : <>
                     <div className='center_main pt-5'>
                         {/* <h1 className='text-center pt-4 font-weight-bold'>Click Your Picture</h1> */}
-                        <Container className='px-5 pt-5'>
+                        <Container className='px-5 pt-4'>
                             <Row className='justify-content-center'>
-                                <Col lg={7} className='my-4'>
+                                <Col lg={7} className='my-3'>
                                     <div className="card-bord py-4 px-3">
                                         <div className="imgDemo">
                                             <Capture setImgFile={setImgFile} />
@@ -129,7 +129,7 @@ const Home = () => {
                                     </div>
                                 </Col>
                             </Row>
-                            <div className="d-flex py-5 justify-content-center">
+                            <div className="d-flex py-2 justify-content-center">
                                 {imgFile && <button className='btn btn-success fs-2 start-btn' onClick={handleStart} >Generate Now</button>}
                             </div>
                         </Container>
