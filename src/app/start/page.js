@@ -56,14 +56,24 @@ const Home = () => {
         setIsLoad(false)
     }
 
+    const [imgURL, setImgURL] = useState('')
     const handleGenrate = async () => {
         setIsLoad(true)
         try {
-            const res = await axios.post("https://bb22-103-17-110-13.ngrok-free.app/rec", {
+            const res = await axios.post('https://bb22-103-17-110-13.ngrok-free.app/rec', {
                 image: imgFile.split(',')[1],
                 choice: select
             })
+            const resUp = await axios.post(' https://adp24companyday.com/aiphotobooth/upload.php', {
+                img: res.data?.result
+            })
+
             handleEnhance(res.data?.result)
+            setImgURL(resUp.data.url)
+
+            // const data = await axios.post('https://dis2023.com/aiphotobooth/upload.php', {
+            //     img: result.split(',')[1]
+            // })
         } catch (error) {
             console.log(error?.message)
             setIsLoad(false)
@@ -71,7 +81,7 @@ const Home = () => {
     }
 
     return (
-        !result ? <>
+        !result ? <div className='pt-5 d-flex justify-content-center' style={{ minHeight: '100vh', alignItems: 'center' }}>
             {
                 isLoad && <div className="isLoad">
                     <div className="spinner-border text-light" role="status">
@@ -80,15 +90,15 @@ const Home = () => {
             }
 
             {
-                isUpload ? <>
-                    <div className='center_main py-5 '>
-                        <h1 className='text-center py-4 text-primary'>Select Your Avatar</h1>
-                        <Container className='px-0'>
-                            <Row className='justify-content-center'>
+                isUpload ? <div className='pt-5'>
+                    <div className='center_main pt-5'>
+                        <h1 className='text-center pt-4 text-primary'>Select Your Avatar</h1>
+                        <Container className='px-4'>
+                            <Row className='justify-content-center px-4'>
 
                                 {
                                     data?.map((arr, ind) => {
-                                        return <Col className={`${ind % 2 === 1 && 'mt-5 pt-5'}`} key={ind}>
+                                        return <Col key={ind} xl={4} lg={4} sm={4} md={4} xs={4}>
                                             {
                                                 arr?.map((Item, keys) => {
                                                     return <div key={keys + ind} className={`genrate my-3 ${select === Item?.encode ? 'selectImg' : ''}`}>
@@ -98,18 +108,18 @@ const Home = () => {
                                             }
                                         </Col>
                                     })
-                                } 
+                                }
 
                             </Row>
-                            <div className="d-flex py-5">
-                                <button className='btn btn-success fs-2 start-btn' onClick={handleGenrate}>Generate Image</button>
+                            <div className="d-flex justify-content-center py-1">
+                                <button className='btn btn-success start-btn' onClick={handleGenrate}>Generate Image</button>
                             </div>
                         </Container>
                     </div>
-                </> : <>
-                    <div className='center_main'>
-                        <h1 className='text-center pt-4 font-weight-bold'>Click Your Picture</h1>
-                        <Container className='px-5'>
+                </div> : <>
+                    <div className='center_main pt-5'>
+                        {/* <h1 className='text-center pt-4 font-weight-bold'>Click Your Picture</h1> */}
+                        <Container className='px-5 pt-5'>
                             <Row className='justify-content-center'>
                                 <Col lg={7} className='my-4'>
                                     <div className="card-bord py-4 px-3">
@@ -119,15 +129,15 @@ const Home = () => {
                                     </div>
                                 </Col>
                             </Row>
-                            <div className="d-flex py-5">
-                                <button className='btn btn-success fs-2 start-btn' onClick={handleStart} >Start Now</button>
+                            <div className="d-flex py-5 justify-content-center">
+                                {imgFile && <button className='btn btn-success fs-2 start-btn' onClick={handleStart} >Generate Now</button>}
                             </div>
                         </Container>
                     </div>
                 </>
             }
-        </> : <>
-            <Result result={result} setResult={setResult} />
+        </div> : <>
+            <Result result={result} setResult={setResult} url={imgURL} />
         </>
     )
 }
