@@ -13,7 +13,7 @@ const Result = ({ result, setResult, url }) => {
     const [email, setEmail] = useState('')
     const router = useRouter()
     const [showQr, setShowQr] = useState(false)
-    const [qr, setQr] = useState('')
+    const [qr, setQr] = useState(url)
     const [show, setShow] = useState(false)
     const [resMSG, setresMSG] = useState('')
     const [showMSG, setShowMsg] = useState(false)
@@ -25,15 +25,8 @@ const Result = ({ result, setResult, url }) => {
     }
 
     const handleQrCode = async () => {
-        try {
-            const data = await axios.post('https://dis2023.com/aiphotobooth/upload.php', {
-                img: result.split(',')[1]
-            })
-            setQr(data?.data?.url)
-            setShowQr(true)
-        } catch (error) {
-            console.log(error)
-        }
+        setQr(url)
+        setShowQr(true)
     }
 
     
