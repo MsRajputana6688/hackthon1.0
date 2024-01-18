@@ -54,22 +54,25 @@ const Page = () => {
   ]
 
   return (
-    <div className="main">
+    <div className="main pt-5">
 
-      {isLoad ? <Loader /> : <Container> 
-          <Row>
-            {
-              data?.map((item, keys) => {
-                return <Col xxl={3} xl={3} lg={3} md={3} sm={6} xs={12} key={keys} className='py-4'>
-                  <Card>
-                    <img src={item?.img} alt="" />
-                  </Card>
-                </Col>
-              })
-            }
-          </Row>
-          <div className="d-flex justify-content-center py-4">
-            <Link href='/start' className='btn btn-success start-btn'>Start Now</Link>
+      {
+        isLoad ? <Loader /> : <Container className='mt-5 d-flex' style={{ minHeight: '100vh', alignItems: 'center' }}>
+          <div>
+            <Row>
+              {
+                data?.map((item, keys) => {
+                  return <Col xxl={3} xl={3} lg={3} md={3} sm={6} xs={12} key={keys} className='p-4'>
+                    <Card>
+                      <img src={item?.img} alt="" />
+                    </Card>
+                  </Col>
+                })
+              }
+            </Row>
+            <div className="d-flex justify-content-center py-4">
+              <Link href='/start' className='btn btn-success start-btn'>Start Now</Link>
+            </div>
           </div>
         </Container >
       }
