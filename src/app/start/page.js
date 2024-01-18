@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
-// import data from '@/image-data'
+import data from '@/image-data'
 import Capture from '@/components'
 import Result from '@/components/Result'
 import { useCookies } from 'react-cookie'
@@ -86,7 +86,7 @@ const Home = () => {
                         <Container className='px-0'>
                             <Row className='justify-content-center'>
 
-                                {/* {
+                                {
                                     data?.map((arr, ind) => {
                                         return <Col className={`${ind % 2 === 1 && 'mt-5 pt-5'}`} key={ind}>
                                             {
@@ -98,7 +98,7 @@ const Home = () => {
                                             }
                                         </Col>
                                     })
-                                } */}
+                                } 
 
                             </Row>
                             <div className="d-flex py-5">
