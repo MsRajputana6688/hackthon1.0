@@ -58,14 +58,14 @@ const Page = () => {
 
       {
         isLoad ? <Loader /> : <Container>
-          <Row className='py-5'>
-            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
-              <img src="/assets/logo.png" alt="" />
-            </Col>
-            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
-              <img src="/assets/logo-01.png" alt="" />
-            </Col>
-          </Row>
+          // <Row className='py-5'>
+          //   <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
+          //     <img src="/assets/logo.png" alt="" />
+          //   </Col>
+          //   <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
+          //     <img src="/assets/logo-01.png" alt="" />
+          //   </Col>
+          // </Row>
 
           <Row>
             {
